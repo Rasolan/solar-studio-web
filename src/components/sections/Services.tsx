@@ -26,10 +26,10 @@ const services: Omit<ProductCardProps, 'variant'>[] = [
     image: '/services/s-2.png',
     pricePrefix: 'от ',
     imageStyles: {
-      width: '179px',
-      height: '243px',
-      top: '173px',
-      left: '90px'
+      width: '283px',
+      height: '261px',
+      top: '160px',
+      left: '45px'
     }
   },
   {
@@ -40,7 +40,7 @@ const services: Omit<ProductCardProps, 'variant'>[] = [
     image: '/services/s-3.png',
     pricePrefix: 'от ',
     imageStyles: {
-      width: '179px',
+      width: '173px',
       height: '243px',
       top: '173px',
       left: '90px'
@@ -54,7 +54,7 @@ const services: Omit<ProductCardProps, 'variant'>[] = [
     image: '/services/s-4.png',
     pricePrefix: 'от ',
     imageStyles: {
-      width: '179px',
+      width: '249px',
       height: '243px',
       top: '173px',
       left: '90px'

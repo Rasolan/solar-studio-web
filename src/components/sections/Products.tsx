@@ -117,7 +117,7 @@ const products: ProductCardProps[] = [
 
 export const Products: FC = () => {
   return (
-    <section className="relative w-full min-h-[1190px] bg-black">
+    <section className="relative w-full min-h-[1190px] bg-black pb-[90px]">
       {/* Заголовок с иконкой */}
       <div className="relative max-w-[1920px] mx-auto pt-24">
         <div className="relative flex items-center justify-center gap-4">
@@ -130,12 +130,21 @@ export const Products: FC = () => {
 
       {/* Сетка товаров */}
       <div className="relative max-w-[1200px] mx-auto mt-24 px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 place-items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 place-items-center mb-[102px]">
           {products.map((product) => (
             <ProductCard key={product.id} {...product} />
           ))}
         </div>
       </div>
+
+      {/* Разделитель */}
+      <div 
+        className="absolute left-1/2 -translate-x-1/2 bottom-[10px] w-[1171px] h-[10px] bg-[#8A2CDC]"
+        style={{
+          filter: 'blur(4.25px)',
+          borderRadius: '50px'
+        }}
+      />
     </section>
   )
 } 
