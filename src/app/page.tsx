@@ -1,7 +1,9 @@
 import { Hero } from '@/components/sections/Hero'
-import { Reviews } from '@/components/sections/Reviews'
 import { Products } from '@/components/sections/Products'
 import { Services } from '@/components/sections/Services'
+import { Free } from '@/components/sections/Free'
+import { Statistics } from '@/components/sections/Statistics'
+import { Reviews } from '@/components/sections/Reviews'
 
 export default function Home() {
   return (
@@ -10,6 +12,8 @@ export default function Home() {
       <Reviews />
       <Products />
       <Services />
+      <Free />
+      <Statistics />
     </main>
   )
 }

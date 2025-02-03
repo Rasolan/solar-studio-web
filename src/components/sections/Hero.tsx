@@ -13,7 +13,7 @@ export const Hero: FC = () => {
 
     const typeText = async () => {
       while (true) {
-        // Печатаем текст :)
+        // Печатаем текст x)
         for (let i = 0; i <= fullText.length; i++) {
           await new Promise(resolve => {
             timeoutId = setTimeout(() => {
@@ -28,10 +28,17 @@ export const Hero: FC = () => {
           timeoutId = setTimeout(resolve, 3000)
         })
 
-        // Очищаем текст
-        setText("")
+        // Удаляем текст
+        for (let i = fullText.length; i >= 0; i--) {
+          await new Promise(resolve => {
+            timeoutId = setTimeout(() => {
+              setText(fullText.slice(0, i))
+              resolve(null)
+            }, 2000 / fullText.length)
+          })
+        }
 
-        // Небольшая пауза 
+        // Небольшая пауза
         await new Promise(resolve => {
           timeoutId = setTimeout(resolve, 500)
         })
@@ -46,28 +53,28 @@ export const Hero: FC = () => {
   }, [])
 
   return (
-    <section className="relative w-full min-h-[946px] bg-black pt-[97px]">
-      {/* Размытая линия сверху */}
-      <div className="absolute w-full h-[49px] left-0 top-[-13px] bg-black blur-[15px]" />
+    <section className="relative w-full min-h-[946px] bg-black pt-[97px] overflow-hidden">
+      {/* Размытая линия снизу */}
+      <div className="absolute w-[2030px] h-[49px] left-[-53px] top-[920px] bg-black blur-[15px] z-[5]" />
 
-      {/* Градиентные круги */}
-      <div className="absolute w-[40%] sm:w-[50%] lg:w-[809px] h-[666px] left-[-10%] lg:left-[-164px] top-[405px] bg-[rgba(153,0,255,0.6)] blur-[350px] pointer-events-none" />
-      <div className="absolute w-[40%] sm:w-[50%] lg:w-[855px] h-[647px] right-[-10%] lg:right-[-164px] top-[299px] bg-[rgba(0,89,255,0.6)] blur-[350px] pointer-events-none" />
-
-      {/* Фоновое изображение в левом нижнем углу
-      <div className="absolute left-[-150px] bottom-[-200px] w-[867px] h-[558px] pointer-events-none z-0">
+      {/* Фоновая картинка */}
+      <div className="absolute left-[-0px] bottom-[-0px] w-[510px] h-[230px] pointer-events-none z-[1]">
         <Image 
           src="/hero-bg.png" 
-          alt="Background wave"
-          width={867}
-          height={558}
-          className="w-full h-full object-contain transform -rotate-[102.98deg] mix-blend-lighten"
+          alt="Background картинка"
+          width={600}
+          height={279}
+          className="w-full h-full object-contain"
           priority
         />
-      </div> */}
+      </div> 
+
+      {/* Градиентные круги */}
+      <div className="absolute w-[40%] sm:w-[50%] lg:w-[809px] h-[666px] left-[-10%] lg:left-[-164px] top-[405px] bg-[rgba(153,0,255,0.6)] blur-[350px] pointer-events-none z-[2]" />
+      <div className="absolute w-[40%] sm:w-[50%] lg:w-[855px] h-[647px] right-[-10%] lg:right-[-164px] top-[299px] bg-[rgba(0,89,255,0.6)] blur-[350px] pointer-events-none z-[2]" />
 
       {/* Основной контейнер */}
-      <div className="relative max-w-[1920px] mx-auto h-full px-4 lg:px-8 xl:px-[117px] z-10">
+      <div className="relative max-w-[1920px] mx-auto h-full px-4 lg:px-8 xl:px-[117px] z-[3]">
         {/* Контент */}
         <div className="relative pt-[154px] lg:pt-[154px] flex flex-col lg:flex-row items-center">
           {/* Левая часть */}
@@ -90,16 +97,16 @@ export const Hero: FC = () => {
 
             {/* Кнопка */}
             <Button 
-              variant="gradient" 
+              variant="accent" 
               size="xl" 
-              className="sm:w-[415px] w-full"
+              className="sm:w-[415px] w-full z-[10]"
             >
               Сделать заказ
             </Button>
           </div>
 
           {/* Изображение справа */}
-          <div className="absolute right-0 top-0 w-[846px] h-[851px] lg:block hidden">
+          <div className="absolute right-0 top-0 w-[846px] h-[851px] lg:block hidden ">
             <Image 
               src="/hero-image.png" 
               alt="Игрок чумба"

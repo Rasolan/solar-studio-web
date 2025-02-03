@@ -1,10 +1,18 @@
 'use client'
 
-import { FC } from 'react'
+import { FC, useRef, useState } from 'react'
+import { ReviewsIconTwo } from '@/components/icons'
+import { ReviewCard } from '@/components/ui/ReviewCard'
+import Slider from 'react-slick'
 import Image from 'next/image'
-import { ReviewsIconTwo, StarIcon, HeartIcon } from '@/components/icons'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import { createReviewsStyles } from './Reviews.styles'
 
 export const Reviews: FC = () => {
+  const [isHovered, setIsHovered] = useState(false)
+  const sliderRef = useRef<Slider>(null)
+  
   const reviews = [
     {
       id: 1,
@@ -29,26 +37,108 @@ export const Reviews: FC = () => {
       author: "Александр Солар",
       avatar: "/avatar.png",
       text: "Работа выполнена на высшем уровне! Быстрое выполнение заказа, качество и уважение к заказчикам. Советую!"
+    },
+    {
+      id: 5,
+      author: "Александр Солар",
+      avatar: "/avatar.png",
+      text: "Работа выполнена на высшем уровне! Быстрое выполнение заказа, качество и уважение к заказчикам. Советую!"
+    },
+    {
+      id: 6,
+      author: "Абоба Питров",
+      avatar: "/avatar.png",
+      text: "Работа выполнена на высшем уровне! Быстрое выполнение заказа, качество и уважение к заказчикам. Советую!"
+    },
+    {
+      id: 7,
+      author: "Григорий Хуйлов",
+      avatar: "/avatar.png",
+      text: "Работа выполнена на высшем уровне! Быстрое выполнение заказа, качество и уважение к заказчикам. Советую!"
+    },
+    {
+      id: 8,
+      author: "Доктор Наук",
+      avatar: "/avatar.png",
+      text: "Работа выполнена на высшем уровне! Быстрое выполнение заказа, качество и уважение к заказчикам. Советую!"
     }
   ]
 
+  const ANIMATION_DURATION = 0.6
+  const SLIDE_DURATION = 3
+  const TRANSITION_CURVE = "cubic-bezier(0.4, 0.0, 0.2, 1)"
+  
+  const duplicatedReviews = [...reviews, ...reviews]
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: ANIMATION_DURATION * 1000,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: SLIDE_DURATION * 1000,
+    cssEase: TRANSITION_CURVE,
+    pauseOnHover: true,
+    rtl: false,
+    swipeToSlide: true,
+    variableWidth: true,
+    arrows: isHovered,
+    draggable: true,
+    useCSS: true,
+    useTransform: true,
+    waitForAnimate: false,
+    swipe: true,
+    touchThreshold: 8,
+    edgeFriction: 0.2,
+    centerMode: true,
+    centerPadding: '0px',
+    focusOnSelect: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+          centerMode: true,
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          centerMode: true,
+        }
+      }
+    ]
+  }
+
+  const customStyles = createReviewsStyles(
+    ANIMATION_DURATION,
+    SLIDE_DURATION,
+    ANIMATION_DURATION,
+    TRANSITION_CURVE
+  )
+
   return (
-    <section className="relative w-full min-h-[573px] bg-black py-20">
+    <section id="reviews-section" className="relative w-full min-h-[573px] bg-black py-32">
+      <style jsx global>{customStyles}</style>
+
       {/* Размытая линия сверху */}
-      <div className="absolute w-full h-[49px] left-0 top-[-13px] bg-black blur-[15px]" />
-
-      {/* Фоновое изображение ЕСЛИ ХОТИТЕ МОЖЕТЕ МОЖЕТЕ ДОБАВИТЬ)) */} 
-      {/* <div className="absolute right-[-16.03%] top-[-31.94%] w-[846px] h-[970px] pointer-events-none">
-        <Image 
-          src="/r56.png.png"
-          alt="Хуипиздовина"
-          width={846}
-          height={970}
-          className="w-full h-full object-contain transform rotate-[24.35deg] mix-blend-lighten"
-          priority
-        />
-      </div> */}
-
+      <div className="absolute w-[2030px] h-[50px] left-[-53px] top-[-16px] bg-black blur-[10px] z-[5]" />
+      
+      {/* изображение справа */}
+      <div className="absolute w-[337px] h-[482px] right-0 right-[185px] top-[-4px]">
+        <div className="absolute w-[480px] h-[482px] -right-[316px] top-0">
+          <Image
+            src="/rr.png"
+            alt="Декоративное изображение"
+            width={480}
+            height={492}
+            className="absolute w-full h-full object-contain transform matrix-[-0.95,0.31,0.31,0.95,0,0]"
+            priority
+          />
+        </div>
+      </div>
       {/* Заголовок с иконкой */}
       <div className="relative w-full mx-auto overflow-hidden">
         <div className="flex items-center gap-4 mb-16 px-6 md:px-10 lg:px-16 xl:px-[178px]">
@@ -59,68 +149,22 @@ export const Reviews: FC = () => {
         </div>
 
         {/* Карточки отзывов */}
-        <div className="w-full">
-          <div className="flex flex-wrap justify-center gap-8 md:gap-[25px] px-4 md:px-8 lg:px-12 xl:px-[117px]">
-            {reviews.map((review) => (
-              <div key={review.id} className="group relative w-[340px] h-[240px] justify-self-center transition-transform duration-300 hover:scale-[1.02]">
-                {/* Фон карточки */}
-                <div className="absolute w-[340px] h-[240px] left-0 top-0 bg-[linear-gradient(116.49deg,#17013E_0%,#8300DA_100%)] rounded-[25px] shadow-lg transition-all duration-300 group-hover:shadow-purple-500/20" />
-
-                {/* Фоновое сердце */}
-                <div className="absolute w-[225px] h-[225px] left-[182px] top-[92px] pointer-events-none opacity-20 overflow-hidden transition-opacity duration-300 group-hover:opacity-30">
-                  <HeartIcon className="w-full h-full" />
+        <div 
+          className="w-full reviews-container relative"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div className="px-4 md:px-8 lg:px-12 xl:px-[117px] overflow-visible">
+            <Slider ref={sliderRef} {...settings}>
+              {duplicatedReviews.map((review, index) => (
+                <div key={`${review.id}-${index}`} style={{"--slide-index": index} as React.CSSProperties}>
+                  <ReviewCard {...review} />
                 </div>
-
-                {/* Аватар */}
-                <div className="absolute w-[55px] h-[55px] left-[17px] top-[12px] rounded-full overflow-hidden ring-2 ring-purple-500/30">
-                  <Image 
-                    src={review.avatar}
-                    alt={review.author}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-
-                {/* Имя автора */}
-                <span className="absolute w-[128px] h-[14px] left-[79px] top-[31px] font-unbounded font-semibold text-[11px] leading-[14px] text-white">
-                  {review.author}
-                </span>
-
-                {/* Звезды рейтинга */}
-                <div className="absolute flex top-[26px]">
-                  <StarIcon className="absolute w-[24px] h-[24px] left-[214px] transition-transform duration-300 group-hover:scale-110" />
-                  <StarIcon className="absolute w-[24px] h-[24px] left-[238px] transition-transform duration-300 group-hover:scale-110" />
-                  <StarIcon className="absolute w-[24px] h-[24px] left-[263px] transition-transform duration-300 group-hover:scale-110" />
-                  <StarIcon className="absolute w-[24px] h-[24px] left-[287px] transition-transform duration-300 group-hover:scale-110" />
-                  <StarIcon className="absolute w-[24px] h-[24px] left-[311px] transition-transform duration-300 group-hover:scale-110" />
-                </div>
-
-                {/* Контент отзыва */}
-                <div className="absolute inset-x-5 top-[80px] bottom-5 flex flex-col">
-                  {/* Открывающая кавычка */}
-                  <div className="relative">
-                    <span className="absolute -left-1 -top-2 font-unbounded font-[500] text-[32px] leading-[32px] text-white/70">
-                      ''
-                    </span>
-                  </div>
-
-                  {/* Текст отзыва */}
-                  <p className="mt-6 mx-auto w-[270px] font-unbounded font-normal text-[14px] leading-[17px] text-center text-white">
-                    {review.text}
-                  </p>
-
-                  {/* Закрывающая кавычка */}
-                  <div className="relative mt-auto">
-                    <span className="absolute -right-1 bottom-0 font-unbounded font-[500] text-[32px] leading-[32px] text-white/70 transform rotate-180">
-                      "
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
+              ))}
+            </Slider>
           </div>
         </div>
       </div>
     </section>
   )
-} 
+}

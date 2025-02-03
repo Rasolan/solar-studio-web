@@ -1,0 +1,58 @@
+@keyframes textPulse {
+  0% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(0.97);
+    opacity: 0.9;
+  }
+  75% {
+    transform: scale(1.02);
+    opacity: 0.95;
+  }
+  100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.button-text {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.button-text:active {
+  animation: textPulse 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.card-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9px 44px;
+  padding: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(215, 182, 255, 0.2),
+    rgba(215, 182, 255, 0.3)
+  );
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+}
+
+.card-glow:hover::before {
+  background: linear-gradient(
+    to right,
+    rgba(215, 182, 255, 0.4),
+    rgba(215, 182, 255, 0.5)
+  );
+  filter: blur(2px);
+} 
