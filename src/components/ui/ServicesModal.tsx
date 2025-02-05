@@ -3,35 +3,21 @@
 import { FC, useEffect, useRef } from 'react'
 import { Button } from './Button'
 import Image from 'next/image'
+import type { Service } from '@/components/sections/Services'
 
-// Интерфейс для стилей изображения
-interface ImageStyles {
-  width: string
-  height: string
-  top?: string
-  bottom?: string
-  left?: string
-  right?: string
-  transform?: string
-}
-
-interface ModalProps {
+interface ServicesModalProps extends Pick<Service, 'id' | 'title' | 'description' | 'price' | 'image' | 'imageStyles'> {
   isOpen: boolean
   onClose: () => void
-  title: string
-  description: string
-  price: number
-  image: string
-  imageStyles?: ImageStyles
 }
 
-export const Modal: FC<ModalProps> = ({
+export const ServicesModal: FC<ServicesModalProps> = ({
   isOpen,
   onClose,
   title,
   description,
   price,
   image,
+  id,
   imageStyles = {
     width: '556px',
     height: '490px',
@@ -61,6 +47,9 @@ export const Modal: FC<ModalProps> = ({
 
   if (!isOpen) return null
 
+  // Получаем изображение для модального окна
+  const modalImage = id ? `/servicemodal/sm-${id}.png` : image
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Затемнение фона */}
@@ -71,36 +60,38 @@ export const Modal: FC<ModalProps> = ({
         ref={modalRef}
         className="relative w-full max-w-[768px] h-[488px] sm:h-[488px] animate-fadeScale rounded-[20px] sm:rounded-[32px] overflow-hidden"
         style={{
-          background: 'linear-gradient(179.84deg, rgba(21, 18, 24, 0.52) 10.64%, rgba(21, 18, 24, 0.72) 39.56%, rgba(85, 2, 167, 0.44) 103.69%, #151218 104.24%, #270D59 108.4%), linear-gradient(180deg, #A801D2 0%, #7B00FF 100%)'
+          background: 'linear-gradient(179.84deg, rgba(21, 18, 24, 0.25) -6.41%, rgba(21, 18, 24, 0.38) 39.56%, rgba(75, 0, 149, 0.582539) 80.15%, rgba(85, 2, 167, 0.74) 103.69%, #151218 103.71%, #5800FF 112.6%), linear-gradient(180deg, #8900FF 0%, #4600FB 100%)'
         }}
       >
         {/* Фон с логотипом */}
         <div 
-          className="absolute inset-0 w-full h-full bg-center bg-no-repeat"
+          className="absolute inset-0 w-full h-full bg-center bg-no-repeat mix-blend-soft-light"
           style={{
             backgroundImage: 'url(/productmodal/bg-im.png)',
             backgroundSize: '100% auto',
             backgroundPosition: 'center calc(50% - 20px)',
-            mixBlendMode: 'soft-light'
+            transform: 'translate3d(0, 0, 0)',
+            willChange: 'transform'
           }}
         />
 
         {/* Контейнер для изображения с маской - скрыт на мобильных */}
         <div className="absolute inset-0 overflow-hidden hidden sm:block">
           <div 
-            className="absolute right-0"
+            className="absolute right-0 transition-transform duration-300"
             style={{
               width: imageStyles.width,
               height: imageStyles.height,
               transform: imageStyles.transform,
-              bottom: '-20px'
+              bottom: '-20px',
+              willChange: 'transform'
             }}
           >
             <Image
-              src={image}
+              src={modalImage}
               alt={title}
               fill
-              className="object-contain"
+              className="object-contain transition-transform duration-300"
               priority
               sizes="(max-width: 556px) 100vw, 556px"
             />
@@ -127,7 +118,7 @@ export const Modal: FC<ModalProps> = ({
                 <span 
                   className="font-unbounded font-bold text-[20px] sm:text-[clamp(18px,2.5vw,24px)] whitespace-nowrap"
                   style={{
-                    background: 'linear-gradient(196.66deg, #5A0973 -9.51%, #6B077B 111.03%)',
+                    background: 'linear-gradient(91.87deg, #6B00DE 2.8%, #6300DE 99.41%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text'
@@ -153,14 +144,7 @@ export const Modal: FC<ModalProps> = ({
               onClick={onClose}
             >
               <span className="font-['Actay_Wide'] font-bold text-[18px] sm:text-[24px] leading-[125.6%] text-white tracking-[-0.01em]">
-                приобрести
-              </span>
-            </Button>
-            <Button
-              variant="card"
-            >
-              <span className="font-['Actay_Wide'] font-bold text-[18px] sm:text-[24px] leading-[125.6%] text-white tracking-[-0.01em]">
-                видео-обзор
+                Написать
               </span>
             </Button>
           </div>

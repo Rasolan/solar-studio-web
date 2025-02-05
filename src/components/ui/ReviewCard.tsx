@@ -9,12 +9,14 @@ interface ReviewCardProps {
   author: string
   avatar: string
   text: string
+  stars?: number
 }
 
 export const ReviewCard: FC<ReviewCardProps> = ({
   author,
   avatar,
-  text
+  text,
+  stars = 5
 }) => {
   const styles = createReviewsStyles(0.6, 3, 0.6, "cubic-bezier(0.4, 0.0, 0.2, 1)")
 
@@ -48,11 +50,11 @@ export const ReviewCard: FC<ReviewCardProps> = ({
 
           {/* Звезды рейтинга */}
           <div className="review-card-stars absolute flex top-[26px]">
-            <StarIcon className="review-card-star absolute w-[24px] h-[24px] left-[214px]" />
-            <StarIcon className="review-card-star absolute w-[24px] h-[24px] left-[238px]" />
-            <StarIcon className="review-card-star absolute w-[24px] h-[24px] left-[263px]" />
-            <StarIcon className="review-card-star absolute w-[24px] h-[24px] left-[287px]" />
-            <StarIcon className="review-card-star absolute w-[24px] h-[24px] left-[311px]" />
+            <StarIcon className={`review-card-star absolute w-[24px] h-[24px] left-[214px] ${1 > stars ? 'opacity-30' : ''}`} />
+            <StarIcon className={`review-card-star absolute w-[24px] h-[24px] left-[238px] ${2 > stars ? 'opacity-30' : ''}`} />
+            <StarIcon className={`review-card-star absolute w-[24px] h-[24px] left-[263px] ${3 > stars ? 'opacity-30' : ''}`} />
+            <StarIcon className={`review-card-star absolute w-[24px] h-[24px] left-[287px] ${4 > stars ? 'opacity-30' : ''}`} />
+            <StarIcon className={`review-card-star absolute w-[24px] h-[24px] left-[311px] ${5 > stars ? 'opacity-30' : ''}`} />
           </div>
 
           {/* Контент отзыва */}

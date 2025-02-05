@@ -97,51 +97,42 @@ const products: ProductCardProps[] = [
 export const Products: FC = () => {
   return (
     <section id="products-section" className="relative w-full bg-black overflow-hidden">
-      <div className="relative w-full py-32">
+      <div className="relative w-full py-20 sm:py-32 lg:py-40">
         {/* Декоративное изображение слева */}
-        <div className="absolute w-[338px] h-[534px] left-[320px] top-0">
-          {/* Контейнер для изображения */}
-          <div className="absolute w-[624.6px] h-[624.32px] -left-[440px] -top-[-140px]">
+        <div className="absolute w-[200px] sm:w-[280px] lg:w-[338px] h-[300px] sm:h-[400px] lg:h-[534px] left-[140px] sm:left-[200px] lg:left-[280px] -top-10 opacity-50 sm:opacity-100">
+          {/* Контейнер */}
+          <div className="absolute w-[400px] sm:w-[500px] lg:w-[624.6px] h-[400px] sm:h-[500px] lg:h-[624.32px] -left-[300px] sm:-left-[350px] lg:-left-[440px] -top-[-100px] sm:-top-[-120px] lg:-top-[-140px]">
             <Image
               src="/prog-b-p.png"
-              alt="Хуйнанэ"
+              alt="Декоративное изображение"
               width={624}
               height={624}
               className="absolute w-full h-full object-contain transform"
               priority
             />
           </div>
-          {/* Свечение под изображением */}
-          <div className="absolute w-[375px] h-[375px] -left-[440px] -top-[-190px] bg-[rgba(130,21,182,0.49)] blur-[121.75px]" />
+          {/* Свечение */}
+          <div className="absolute w-[600px] sm:w-[400px] lg:w-[275px] h-[600px] sm:h-[300px] lg:h-[375px] -left-[262px] sm:-left-[312px] lg:-left-[362px] top-[165px] sm:top-[185px] lg:top-[205px] bg-[rgba(130,21,182,0.49)] blur-[80px] sm:blur-[100px] lg:blur-[121.75px]" />
         </div>
 
         {/* Заголовок с иконкой */}
-        <div className="relative pt-24">
-          <div className="relative flex items-center justify-center gap-4">
-            <CartIconTwo className="w-[79px] h-[79px]" />
-            <h2 className="font-unbounded font-semibold text-[64px] leading-[79px] bg-gradient-to-r from-white to-[#E3D6FF] bg-clip-text text-transparent">
-              Наши товары
+        <div className="relative">
+          <div className="relative flex items-center justify-center gap-2 sm:gap-4">
+            <CartIconTwo className="w-[40px] h-[40px] sm:w-[60px] sm:h-[60px] lg:w-[79px] lg:h-[79px]" />
+            <h2 className="font-unbounded font-semibold text-[32px] sm:text-[48px] lg:text-[64px] leading-tight lg:leading-[79px] bg-gradient-to-r from-white to-[#E3D6FF] bg-clip-text text-transparent">
+              Наши продукты
             </h2>
           </div>
         </div>
 
-        {/* Сетка товаров */}
-        <div className="relative max-w-[1200px] mx-auto mt-24 px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 place-items-center">
+        {/* Сетка продуктов */}
+        <div className="relative max-w-[1200px] mx-auto mt-16 sm:mt-24 lg:mt-32 px-4">
+          <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
             {products.map((product) => (
               <ProductCard key={product.id} {...product} />
             ))}
           </div>
         </div>
-
-        {/* Разделитель */}
-        {/* <div 
-          className="absolute left-1/2 -translate-x-1/2 bottom-[10px] w-[1171px] h-[10px] bg-[#8A2CDC]"
-          style={{
-            filter: 'blur(4.25px)',
-            borderRadius: '50px'
-          }}
-        /> */}
       </div>
     </section>
   )

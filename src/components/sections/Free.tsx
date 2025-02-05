@@ -16,6 +16,7 @@ interface Partner {
   image: string
   alt: string
   hasRadius?: boolean
+  name: string
 }
 
 // Массив бесплатных ресурсов
@@ -34,13 +35,13 @@ const freeItems: FreeCardProps[] = [
   },
   {
     id: 3,
-    title: 'Карты и схемы',
+    title: 'Карты',
     image: '/free/f-3.jpg',
     fontSize: '24px'
   },
   {
     id: 4,
-    title: 'Конфигурации',
+    title: 'Конфиги',
     image: '/free/f-4.jpg',
     fontSize: '22px'
   },
@@ -58,28 +59,31 @@ const partners: Partner[] = [
     id: 1,
     image: '/partners/p-1.jpg',
     alt: 'Партнер 1',
+    name: 'Партнер 1'
   },
   {
     id: 2,
     image: '/partners/p-2.png',
-    alt: 'Партнер 2'
+    alt: 'Партнер 2',
+    name: 'Партнер 2'
   },
   {
     id: 3,
     image: '/partners/p-3.jpg',
     alt: 'Партнер 3',
+    name: 'Партнер 3'
   }
 ]
 
 // Компонент карточки бесплатного предложения
 const FreeCard: FC<FreeCardProps> = ({ title, image, fontSize = '32px' }) => {
   return (
-    <div className="group relative w-[340px] h-[240px] transition-transform duration-300 hover:scale-[1.02] overflow-hidden">
+    <div className="group relative w-[300px] sm:w-[340px] h-[220px] sm:h-[240px] transition-transform duration-300 hover:scale-[1.02] overflow-hidden">
       {/* Фон карточки */}
-      <div className="absolute inset-0 bg-[linear-gradient(116.49deg,#17013E_0%,#8300DA_100%)] rounded-[25px] shadow-lg transition-all duration-300 group-hover:shadow-purple-500/20" />
+      <div className="absolute inset-0 bg-[linear-gradient(116.49deg,#17013E_0%,#8300DA_100%)] rounded-[20px] sm:rounded-[25px] shadow-lg transition-all duration-300 group-hover:shadow-purple-500/20" />
 
       {/* Фоновый логотип */}
-      <div className="absolute w-[365px] h-[365px] left-[-12px] top-[-62px] mix-blend-soft-light opacity-40">
+      <div className="absolute w-[320px] sm:w-[365px] h-[320px] sm:h-[365px] left-[-12px] top-[-62px] mix-blend-soft-light opacity-40">
         <Image
           src="/SolarStudioLogobg.png"
           alt="Фоновый логотип"
@@ -92,10 +96,8 @@ const FreeCard: FC<FreeCardProps> = ({ title, image, fontSize = '32px' }) => {
 
       {/* Заголовок */}
       <h3 
-        className="absolute left-[26px] top-[20px] font-unbounded font-semibold text-white z-10"
+        className="absolute left-[20px] sm:left-[26px] top-[16px] sm:top-[20px] font-unbounded font-semibold text-[32px] leading-[40px] text-white z-10"
         style={{ 
-          fontSize, 
-          lineHeight: '40px',
           textShadow: '0px 0px 10px rgba(255, 255, 255, 0.3)'
         }}
       >
@@ -103,14 +105,14 @@ const FreeCard: FC<FreeCardProps> = ({ title, image, fontSize = '32px' }) => {
       </h3>
 
       {/* Блок с ценой */}
-      <div className="absolute right-[25px] top-[26px] w-[53px] h-[32px] bg-white rounded-[0px_10px] flex items-center justify-center z-10">
-        <span className="font-unbounded font-bold text-[20px] leading-[25px] tracking-[0.01em] bg-gradient-to-r from-[#5500FF] to-[#7300FF] bg-clip-text text-transparent">
+      <div className="absolute right-[20px] sm:right-[25px] top-[20px] sm:top-[26px] w-[45px] sm:w-[53px] h-[28px] sm:h-[32px] bg-white rounded-[0px_8px] sm:rounded-[0px_10px] flex items-center justify-center z-10">
+        <span className="font-unbounded font-bold text-[18px] sm:text-[20px] leading-[22px] sm:leading-[25px] tracking-[0.01em] bg-gradient-to-r from-[#5500FF] to-[#7300FF] bg-clip-text text-transparent">
           0 ₽
         </span>
       </div>
 
       {/* Изображение */}
-      <div className="absolute left-[33px] top-[70px] w-[274px] h-[154px] rounded-[25px] overflow-hidden z-10">
+      <div className="absolute left-[25px] sm:left-[33px] top-[70px] sm:top-[70px] w-[250px] sm:w-[274px] h-[140px] sm:h-[154px] rounded-[20px] sm:rounded-[25px] overflow-hidden z-10">
         <Image
           src={image}
           alt={title}
@@ -127,75 +129,78 @@ export const Free: FC = () => {
   return (
     <section className="relative w-full bg-black overflow-hidden">
       {/* Секция бесплатных предложений */}
-      <div className="relative w-full py-32">
+      <div className="relative w-full py-20 sm:py-32 lg:py-40">
         {/* Заголовок с иконкой */}
         <div className="relative w-full mx-auto">
-          <div className="relative flex items-center justify-center gap-4 mb-16">
-            <ServicesIconH className="w-[79px] h-[79px]" />
-            <h2 className="font-unbounded font-semibold text-[64px] leading-[79px] bg-gradient-to-r from-white to-[#E3D6FF] bg-clip-text text-transparent">
+          <div className="relative flex items-center justify-center gap-2 sm:gap-4 mb-12 sm:mb-16 lg:mb-24">
+            <ServicesIconH className="w-[40px] h-[40px] sm:w-[60px] sm:h-[60px] lg:w-[79px] lg:h-[79px]" />
+            <h2 className="font-unbounded font-semibold text-[32px] sm:text-[48px] lg:text-[64px] leading-tight lg:leading-[79px] bg-gradient-to-r from-white to-[#E3D6FF] bg-clip-text text-transparent">
               Бесплатно
             </h2>
           </div>
 
           {/* Сетка карточек */}
-          <div className="relative w-full max-w-[1920px] mx-auto px-4">
-            <div className="flex flex-wrap justify-center gap-8 mb-[102px]">
+          <div className="relative max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8">
               {freeItems.map((item) => (
                 <FreeCard key={item.id} {...item} />
               ))}
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Секция партнеров */}
-      <div className="relative w-full min-h-[600px]">
-        {/* Фоновое свечение */}
-        <div 
-          className="absolute left-1/2 -translate-x-1/2 w-[1514px] h-[250px] top-0"
-          style={{
-            background: 'rgba(47, 0, 255, 0.3)',
-            filter: 'blur(140.4px)'
-          }}
-        />
-
-        {/* Иконка */}
-        <div className="relative flex justify-center mt-4">
-          <Image
-            src="/collaboration.png"
-            alt="Иконка сотрудничества"
-            width={96}
-            height={96}
-            className="mb-4"
+        {/* Секция партнеров */}
+        <div className="relative w-full mt-32 sm:mt-40 lg:mt-60">
+          {/* Фоновое свечение */}
+          <div 
+            className="absolute left-1/2 -translate-x-1/2 w-full sm:w-[80%] lg:w-[1514px] h-[150px] sm:h-[200px] lg:h-[250px] top-0"
+            style={{
+              background: 'rgba(47, 0, 255, 0.3)',
+              filter: 'blur(140.4px)'
+            }}
           />
-        </div>
 
-        {/* Заголовок */}
-        <div className="relative max-w-[1550px] mx-auto text-center mt-4">
-          <h2 className="font-unbounded font-semibold text-[60px] leading-[74px] bg-gradient-to-b from-white to-[#ADB4FF] bg-clip-text text-transparent">
-            Мы работаем вместе с популярными проектами!
-          </h2>
-        </div>
+          {/* Иконка */}
+          <div className="relative flex justify-center">
+            <Image
+              src="/collaboration.png"
+              alt="Иконка сотрудничества"
+              width={96}
+              height={96}
+              className="w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] lg:w-[96px] lg:h-[96px]"
+            />
+          </div>
 
-        {/* Логотипы партнеров */}
-        <div className="relative flex justify-center items-center gap-11 mt-16">
-          {partners.map((partner) => (
-            <div 
-              key={partner.id} 
-              className="w-[147px] h-[147px] overflow-hidden transition-transform duration-300 hover:scale-105"
-              style={{ borderRadius: partner.hasRadius ? '25px' : '0' }}
-            >
-              <Image
-                src={partner.image}
-                alt={partner.alt}
-                width={147}
-                height={147}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
+          {/* Заголовок */}
+          <div className="relative max-w-[1550px] mx-auto text-center mt-6 sm:mt-8 lg:mt-12 px-4 sm:px-6 lg:px-8">
+            <h2 className="font-unbounded font-semibold text-[32px] sm:text-[48px] lg:text-[60px] leading-tight sm:leading-[1.2] lg:leading-[74px] bg-gradient-to-b from-white to-[#ADB4FF] bg-clip-text text-transparent">
+              Мы работаем вместе с популярными проектами!
+            </h2>
+          </div>
+
+          {/* Логотипы партнеров */}
+          <div className="relative flex flex-wrap justify-center items-center gap-4 sm:gap-8 lg:gap-11 mt-8 sm:mt-12 lg:mt-16 px-4 sm:px-6 lg:px-8">
+            {partners.map((partner) => (
+              <div 
+                key={partner.id} 
+                className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] lg:w-[147px] lg:h-[147px] overflow-hidden transition-transform duration-300 hover:scale-105"
+                style={{ 
+                  borderRadius: partner.hasRadius ? '16px sm:20px lg:25px' : '0',
+                  filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))'
+                }}
+              >
+                <Image
+                  src={partner.image}
+                  alt={partner.alt}
+                  width={147}
+                  height={147}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   )
-} 
+}
