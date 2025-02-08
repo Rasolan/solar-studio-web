@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren } from 'react'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import { NotificationsProvider } from '../providers/NotificationsProvider'
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -8,6 +9,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
       <Header />
       <main className="flex-grow">{children}</main>
       <Footer />
+      <NotificationsProvider />
     </div>
   )
 } 

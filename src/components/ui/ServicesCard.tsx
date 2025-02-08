@@ -122,7 +122,7 @@ export const ServicesCard: FC<ServiceCardProps> = ({
                 bottom: imageStyles.bottom,
                 left: imageStyles.left,
                 right: imageStyles.right,
-                transform: variant === 'service' ? `${imageStyles.transform || ''} rotate(6.14deg) translate3d(0, 0, 0)` : `${imageStyles.transform} translate3d(0, 0, 0)`,
+                transform: variant === 'service' ? `${imageStyles.transform || ''} translate3d(0, 0, 0)` : `${imageStyles.transform} translate3d(0, 0, 0)`,
                 transformOrigin: 'center center',
                 willChange: 'transform'
               }}

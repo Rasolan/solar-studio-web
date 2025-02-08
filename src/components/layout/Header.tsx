@@ -20,7 +20,8 @@ export const Header: FC = () => {
     { href: '#reviews', icon: ReviewsIcon, text: 'Отзывы', sectionId: 'reviews-section' },
     { href: '#products', icon: CartIcon, text: 'Товары', sectionId: 'products-section' },
     { href: '#services', icon: ServicesIcon, text: 'Услуги', sectionId: 'services-section' },
-    { href: '/agreement', icon: AgreementIcon, text: 'Пользовательское соглашение' },
+    { href: 'agreement', icon: AgreementIcon, text: 'Пользовательское соглашение' },
+
   ]
 
   const isActive = (path: string) => {
@@ -249,7 +250,7 @@ export const Header: FC = () => {
 
         {/* Кнопка входа - Десктоп */}
         <div className="hidden lg:block absolute right-4 lg:right-[50px] xl:right-[178px] top-1/2 -translate-y-1/2">
-          <Button variant="header">
+          <Button variant="header" href="/login">
             Войти
           </Button>
         </div>
@@ -258,7 +259,7 @@ export const Header: FC = () => {
         <div className="lg:hidden">
           {/* Мобильная кнопка входа */}
           <div className="lg:hidden absolute right-16 md:right-20 top-1/2 -translate-y-1/2">
-            <Button variant="header">
+            <Button variant="header" href="/login">
               Войти
             </Button>
           </div>

@@ -8,6 +8,7 @@ import Image from 'next/image'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { createReviewsStyles } from './Reviews.styles'
+import { motion } from 'framer-motion'
 
 export const Reviews: FC = () => {
   const [isHovered, setIsHovered] = useState(false)
@@ -128,7 +129,14 @@ export const Reviews: FC = () => {
   )
 
   return (
-    <section id="reviews-section" className="relative w-full min-h-[573px] bg-black py-32">
+    <motion.section 
+      id="reviews-section"
+      className="relative w-full pt-[69px] pb-[69px] bg-black overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.5 }}
+    >
       <style jsx global>{customStyles}</style>
 
       {/* Размытая линия сверху */}
@@ -148,7 +156,13 @@ export const Reviews: FC = () => {
         </div>
       </div>
       {/* Заголовок с иконкой */}
-      <div className="relative w-full mx-auto overflow-hidden">
+      <motion.div 
+        className="relative w-full mx-auto overflow-hidden"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         <div className="flex items-center gap-4 mb-16 px-6 md:px-10 lg:px-16 xl:px-[178px]">
           <ReviewsIconTwo className="w-[60px] h-[60px] md:w-[79px] md:h-[79px]" />
           <h2 className="font-unbounded font-semibold text-4xl md:text-5xl lg:text-[64px] leading-tight md:leading-[79px] bg-gradient-to-r from-white to-[#E3D6FF] bg-clip-text text-transparent">
@@ -158,11 +172,11 @@ export const Reviews: FC = () => {
 
         {/* Карточки отзывов */}
         <div 
-          className="w-full reviews-container relative"
+          className="w-full reviews-container relative mt-16 sm:mt-24 lg:mt-32"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <div className="px-4 md:px-8 lg:px-12 xl:px-[117px] overflow-visible">
+          <div className="px-4 sm:px-6 lg:px-8 overflow-visible">
             <Slider ref={sliderRef} {...settings}>
               {duplicatedReviews.map((review, index) => (
                 <div key={review.id} style={{"--slide-index": index} as React.CSSProperties}>
@@ -178,7 +192,7 @@ export const Reviews: FC = () => {
             </Slider>
           </div>
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   )
 }

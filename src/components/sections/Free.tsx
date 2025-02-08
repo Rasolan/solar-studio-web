@@ -1,6 +1,9 @@
+'use client'
+
 import { FC } from 'react'
 import Image from 'next/image'
 import { ServicesIconH } from '@/components/icons'
+import { motion } from 'framer-motion'
 
 // Интерфейс для карточки
 interface FreeCardProps {
@@ -127,11 +130,23 @@ const FreeCard: FC<FreeCardProps> = ({ title, image, fontSize = '32px' }) => {
 
 export const Free: FC = () => {
   return (
-    <section className="relative w-full bg-black overflow-hidden">
+    <motion.section 
+      className="relative w-full pt-[69px] pb-[69px] bg-black overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.5 }}
+    >
       {/* Секция бесплатных предложений */}
-      <div className="relative w-full py-20 sm:py-32 lg:py-40">
+      <div className="relative w-full">
         {/* Заголовок с иконкой */}
-        <div className="relative w-full mx-auto">
+        <motion.div 
+          className="relative w-full mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <div className="relative flex items-center justify-center gap-2 sm:gap-4 mb-12 sm:mb-16 lg:mb-24">
             <ServicesIconH className="w-[40px] h-[40px] sm:w-[60px] sm:h-[60px] lg:w-[79px] lg:h-[79px]" />
             <h2 className="font-unbounded font-semibold text-[32px] sm:text-[48px] lg:text-[64px] leading-tight lg:leading-[79px] bg-gradient-to-r from-white to-[#E3D6FF] bg-clip-text text-transparent">
@@ -140,17 +155,37 @@ export const Free: FC = () => {
           </div>
 
           {/* Сетка карточек */}
-          <div className="relative max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="relative max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8">
-              {freeItems.map((item) => (
-                <FreeCard key={item.id} {...item} />
+              {freeItems.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                >
+                  <FreeCard {...item} />
+                </motion.div>
               ))}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Секция партнеров */}
-        <div className="relative w-full mt-32 sm:mt-40 lg:mt-60">
+        <motion.div 
+          className="relative w-full mt-16 sm:mt-24 lg:mt-32"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
           {/* Фоновое свечение */}
           <div 
             className="absolute left-1/2 -translate-x-1/2 w-full sm:w-[80%] lg:w-[1514px] h-[150px] sm:h-[200px] lg:h-[250px] top-0"
@@ -180,27 +215,33 @@ export const Free: FC = () => {
 
           {/* Логотипы партнеров */}
           <div className="relative flex flex-wrap justify-center items-center gap-4 sm:gap-8 lg:gap-11 mt-8 sm:mt-12 lg:mt-16 px-4 sm:px-6 lg:px-8">
-            {partners.map((partner) => (
-              <div 
-                key={partner.id} 
-                className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] lg:w-[147px] lg:h-[147px] overflow-hidden transition-transform duration-300 hover:scale-105"
-                style={{ 
-                  borderRadius: partner.hasRadius ? '16px sm:20px lg:25px' : '0',
-                  filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))'
-                }}
+            {partners.map((partner, index) => (
+              <motion.div 
+                key={partner.id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
               >
-                <Image
-                  src={partner.image}
-                  alt={partner.alt}
-                  width={147}
-                  height={147}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+                <div 
+                  className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] lg:w-[147px] lg:h-[147px] overflow-hidden transition-transform duration-300 hover:scale-105"
+                  style={{ 
+                    borderRadius: partner.hasRadius ? '50%' : '0' 
+                  }}
+                >
+                  <Image
+                    src={partner.image}
+                    alt={partner.alt}
+                    width={147}
+                    height={147}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }

@@ -1,7 +1,10 @@
-import { FC } from 'react'
+'use client'
+
+import { FC, useRef } from 'react'
 import { CartIconTwo } from '@/components/icons'
 import { ProductCard, ProductCardProps } from '@/components/ui/ProductCard'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 // Список всех товаров с их данными
 const products: ProductCardProps[] = [
@@ -95,9 +98,19 @@ const products: ProductCardProps[] = [
 ]
 
 export const Products: FC = () => {
+  const sectionRef = useRef<HTMLElement>(null)
+
   return (
-    <section id="products-section" className="relative w-full bg-black overflow-hidden">
-      <div className="relative w-full py-20 sm:py-32 lg:py-40">
+    <motion.section 
+      id="products-section"
+      ref={sectionRef}
+      className="relative w-full pt-[69px] pb-[69px] bg-black overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="relative w-full">
         {/* Декоративное изображение слева */}
         <div className="absolute w-[200px] sm:w-[280px] lg:w-[338px] h-[300px] sm:h-[400px] lg:h-[534px] left-[140px] sm:left-[200px] lg:left-[280px] -top-10 opacity-50 sm:opacity-100">
           {/* Контейнер */}
@@ -116,24 +129,47 @@ export const Products: FC = () => {
         </div>
 
         {/* Заголовок с иконкой */}
-        <div className="relative">
+        <motion.div 
+          className="relative"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <div className="relative flex items-center justify-center gap-2 sm:gap-4">
             <CartIconTwo className="w-[40px] h-[40px] sm:w-[60px] sm:h-[60px] lg:w-[79px] lg:h-[79px]" />
             <h2 className="font-unbounded font-semibold text-[32px] sm:text-[48px] lg:text-[64px] leading-tight lg:leading-[79px] bg-gradient-to-r from-white to-[#E3D6FF] bg-clip-text text-transparent">
               Наши продукты
             </h2>
           </div>
-        </div>
+        </motion.div>
 
         {/* Сетка продуктов */}
-        <div className="relative max-w-[1200px] mx-auto mt-16 sm:mt-24 lg:mt-32 px-4">
+        <motion.div 
+          className="relative max-w-[1200px] mx-auto mt-16 sm:mt-24 lg:mt-32 px-4 sm:px-6 lg:px-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
           <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
-            {products.map((product) => (
-              <ProductCard key={product.id} {...product} />
+            {products.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+              >
+                <ProductCard {...product} sectionRef={sectionRef} />
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
+
+        {/* Контейнер для модальных окон */}
+        <div id="products-modal-root" className="relative" style={{ height: 0 }} />
       </div>
-    </section>
+    </motion.section>
   )
 } 

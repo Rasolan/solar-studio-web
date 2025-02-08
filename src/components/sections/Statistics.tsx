@@ -2,28 +2,25 @@
 
 import { FC, useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 interface StatItem {
   count: number
   text: string
-  left: string
 }
 
 const stats: StatItem[] = [
   {
     count: 100,
-    text: 'выполненных заказов',
-    left: 'lg:left-[252px] left-1/2 -translate-x-1/2 lg:translate-x-0'
+    text: 'выполненных заказов'
   },
   {
     count: 300,
-    text: 'клиентов',
-    left: 'lg:left-[811px] left-1/2 -translate-x-1/2 lg:translate-x-0'
+    text: 'клиентов'
   },
   {
     count: 200,
-    text: 'отзывов',
-    left: 'lg:left-[1400px] left-1/2 -translate-x-1/2 lg:translate-x-0'
+    text: 'отзывов'
   }
 ]
 
@@ -82,12 +79,22 @@ export const Statistics: FC = () => {
   }
 
   return (
-    <section 
+    <motion.section 
       id="statistics-section" 
       className="relative w-full py-20 sm:py-28 lg:py-32 mt-20 sm:mt-28 lg:mt-32 bg-[#2A0057] overflow-hidden shadow-[inset_0px_0px_40px_#000000] mb-20 sm:mb-28 lg:mb-32"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.5 }}
     >
       {/* Фоновый логотип */}
-      <div className="absolute inset-0 mix-blend-soft-light">
+      <motion.div 
+        className="absolute inset-0 mix-blend-soft-light"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
         <Image
           src="/SolarStudioLogobgv2.png"
           alt="Фоновый логотип"
@@ -95,51 +102,73 @@ export const Statistics: FC = () => {
           className="object-cover"
           priority
         />
-      </div>
+      </motion.div>
 
       {/* Фоновые свечения */}
-      <div 
+      <motion.div 
         className="absolute w-[500px] sm:w-[700px] lg:w-[859px] h-[250px] sm:h-[300px] lg:h-[393px] -left-[50px] sm:-left-[70px] lg:-left-[89px] -top-[100px] sm:-top-[150px] lg:-top-[207px]"
         style={{
           background: '#BF00FF',
           filter: 'blur(293.3px)'
         }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
       />
-      <div 
+      <motion.div 
         className="absolute w-[300px] sm:w-[400px] lg:w-[529px] h-[200px] sm:h-[250px] lg:h-[367px] right-0 sm:right-[50px] lg:right-[100px] top-[150px] sm:top-[200px] lg:top-[296px]"
         style={{
           background: '#0015FF',
           filter: 'blur(293.3px)'
         }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.2 }}
       />
 
       {/* Статистика */}
       <div className="relative max-w-[1920px] mx-auto min-h-[400px] sm:min-h-[200px] lg:min-h-[200px] px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-16 sm:gap-20 lg:gap-32">
+        <div className="grid grid-cols-1 sm:grid-cols-3 items-center justify-items-center gap-16 sm:gap-20 lg:gap-32">
           {stats.map((stat, index) => (
-            <div 
+            <motion.div 
               key={index} 
               className="text-center transform transition-all duration-300 hover:scale-105"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
             >
               {/* Число */}
-              <h3 
+              <motion.h3 
                 className="font-unbounded font-semibold text-[40px] sm:text-[60px] lg:text-[100px] leading-tight sm:leading-[1.1] lg:leading-[124px] text-transparent bg-clip-text w-[250px] sm:w-[300px] lg:w-[400px] flex items-center justify-center"
                 style={{
                   background: 'linear-gradient(281.11deg, #A8A2FF 3.2%, #BA7AFF 76.73%)',
                   WebkitBackgroundClip: 'text'
                 }}
+                initial={{ scale: 0.8 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
               >
                 <span>{counts[index]}</span>
                 <span className="ml-2 sm:ml-3 lg:ml-4">+</span>
-              </h3>
+              </motion.h3>
               {/* Подпись */}
-              <p className="font-unbounded font-semibold text-[14px] sm:text-[16px] lg:text-[20px] leading-tight sm:leading-[1.2] lg:leading-[25px] text-[#C6C6C6] mt-2 sm:mt-3 lg:mt-4 whitespace-nowrap">
+              <motion.p 
+                className="font-unbounded font-semibold text-[14px] sm:text-[16px] lg:text-[20px] leading-tight sm:leading-[1.2] lg:leading-[25px] text-[#C6C6C6] mt-2 sm:mt-3 lg:mt-4 whitespace-nowrap"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+              >
                 {stat.text}
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }

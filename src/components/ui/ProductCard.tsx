@@ -27,6 +27,7 @@ export interface ProductCardProps {
   imageStyles?: ImageStyles
   variant?: 'product' | 'service'
   pricePrefix?: string
+  sectionRef?: React.RefObject<HTMLElement>
 }
 
 export const ProductCard: FC<ProductCardProps> = ({
@@ -41,7 +42,8 @@ export const ProductCard: FC<ProductCardProps> = ({
     height: '416px',
   },
   variant = 'product',
-  pricePrefix = ''
+  pricePrefix = '',
+  sectionRef
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const titleRef = useRef<HTMLHeadingElement>(null)
@@ -182,6 +184,7 @@ export const ProductCard: FC<ProductCardProps> = ({
           right: '0px',
           transform: 'none'
         }}
+        sectionRef={sectionRef}
       />
     </>
   )

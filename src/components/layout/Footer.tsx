@@ -91,22 +91,57 @@ export const Footer: FC = () => {
           </p>
 
           {/* Социальные кнопки */}
-          <div className="mt-8 lg:mt-0 w-full flex flex-col items-center justify-center gap-4">
+          <div className="mt-8 lg:mt-0 w-full flex flex-col lg:flex-row items-center lg:items-start lg:justify-end gap-[20px] lg:pr-[188px] lg:py-[84px]">
             {socials.map((social, index) => (
               <Link 
                 key={index}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`relative w-[280px] sm:w-[260px] lg:w-[284px] h-[70px] lg:absolute lg:right-[188px] ${index === 0 ? 'lg:top-[84px]' : 'lg:top-[174px]'} bg-[linear-gradient(107.45deg,#686781_0%,#0B094E_100%)] border border-[#949494] rounded-[16px] overflow-hidden transition-all duration-300 hover:bg-[linear-gradient(107.45deg,#787891_0%,#1B195E_100%)]`}
+                className={`
+                  box-border
+                  relative 
+                  w-[280px]
+                  h-[124px]
+                  bg-[linear-gradient(107.45deg,#686781_0%,#0B094E_100%)]
+                  border border-[#949494] 
+                  rounded-[25px] 
+                  overflow-hidden
+                  flex items-center justify-center
+                `}
               >
-                {/* Текст */}
-                <div className="absolute inset-0 flex flex-col justify-center px-6">
-                  <span className="block font-unbounded font-black text-[20px] leading-[1.2] text-white">
+                <div className="flex items-center justify-center w-full h-full relative">
+                  {/* Тень текста */}
+                  <span className="
+                    absolute
+                    font-unbounded 
+                    font-[900]
+                    text-[32px] 
+                    leading-[40px]
+                    text-[#272727]/60
+                    w-[198px]
+                    text-center
+                    flex items-center justify-center
+                    -translate-y-[18px]
+                    translate-x-[8px]
+                    select-none
+                  ">
                     {social.title}
                   </span>
-                  <span className="block text-[12px] font-medium text-gray-300 mt-1">
-                    Присоединяйтесь к нам
+                  {/* Основной текст */}
+                  <span className="
+                    relative
+                    font-unbounded 
+                    font-[900]
+                    text-[32px] 
+                    leading-[40px]
+                    text-white
+                    w-[198px]
+                    text-center
+                    flex items-center justify-center
+                    select-none
+                  ">
+                    {social.title}
                   </span>
                 </div>
               </Link>
