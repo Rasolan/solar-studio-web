@@ -20,7 +20,8 @@ export const Header: FC = () => {
     { href: '#reviews', icon: ReviewsIcon, text: 'Отзывы', sectionId: 'reviews-section' },
     { href: '#products', icon: CartIcon, text: 'Товары', sectionId: 'products-section' },
     { href: '#services', icon: ServicesIcon, text: 'Услуги', sectionId: 'services-section' },
-    { href: '/agreement', icon: AgreementIcon, text: 'Пользовательское соглашение' },
+    { href: 'agreement', icon: AgreementIcon, text: 'Пользовательское соглашение' },
+
   ]
 
   const isActive = (path: string) => {
@@ -28,7 +29,7 @@ export const Header: FC = () => {
     return activeSection === path.replace('#', '')
   }
 
-  // Обработчик плавной прокрутки
+  // плавная прокрутка
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (pathname !== '/' || !href.startsWith('#')) return
 
@@ -40,7 +41,7 @@ export const Header: FC = () => {
     }
   }
 
-  // Отслеживаем видимые секции
+  // Отслеживаем секции
   useEffect(() => {
     if (pathname !== '/') return
 
@@ -143,9 +144,16 @@ export const Header: FC = () => {
   }, [])
 
   return (
-    <header className={`fixed w-full h-[70px] md:h-[80px] lg:h-[90px] xl:h-[97px] bg-black z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-opacity-95 backdrop-blur-sm' : ''
-    }`}>
+    <header 
+      className={`fixed w-full h-[70px] md:h-[80px] lg:h-[90px] xl:h-[97px] bg-black z-50 transition-all duration-300 
+        ${isScrolled ? 'bg-opacity-95 backdrop-blur-sm' : ''}`
+      }
+      style={{
+        '--header-scale': '1',
+        '--nav-scale': 'calc(1 / var(--zoom-level, 1))',
+        '--zoom-level': window.devicePixelRatio,
+      } as React.CSSProperties}
+    >
       {/* Полоска загрузки сайта */}
       <div className="absolute top-0 left-0 w-full h-[2px] bg-[#1E0242] z-[60]">
         <div 
@@ -173,51 +181,76 @@ export const Header: FC = () => {
             alt="Solar Studio" 
             width={173} 
             height={63}
-            className="w-[100px] h-[37px] md:w-[120px] md:h-[44px] lg:w-[140px] lg:h-[51px] xl:w-[173px] xl:h-[63px]"
+            className="w-[100px] h-[37px] md:w-[120px] md:h-[44px] lg:w-[140px] lg:h-[51px] xl:w-[173px] xl:h-[63px] 
+              [zoom:110%]:w-[92px] [zoom:110%]:h-[34px] [zoom:110%]:md:w-[110px] [zoom:110%]:md:h-[40px] [zoom:110%]:lg:w-[129px] [zoom:110%]:lg:h-[47px] [zoom:110%]:xl:w-[159px] [zoom:110%]:xl:h-[58px]
+              [zoom:125%]:w-[85px] [zoom:125%]:h-[31px] [zoom:125%]:md:w-[102px] [zoom:125%]:md:h-[37px] [zoom:125%]:lg:w-[119px] [zoom:125%]:lg:h-[43px] [zoom:125%]:xl:w-[147px] [zoom:125%]:xl:h-[54px]
+              [zoom:150%]:w-[75px] [zoom:150%]:h-[28px] [zoom:150%]:md:w-[90px] [zoom:150%]:md:h-[33px] [zoom:150%]:lg:w-[105px] [zoom:150%]:lg:h-[38px] [zoom:150%]:xl:w-[130px] [zoom:150%]:xl:h-[47px]"
             priority
           />
         </Link>
 
         {/* Навигация - Десктоп */}
-        <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 items-center gap-[40px] xl:gap-[60px]">
-          {navItems.map((item) => {
-            const Icon = item.icon
-            const isCurrentPage = isActive(item.href)
-            return (
-              <Link 
-                key={item.href}
-                href={item.href} 
-                onClick={(e) => handleScroll(e, item.href)}
-                className="flex items-center group relative py-2"
-              >
-                <div className="relative">
-                  {/* Иконка */}
-                  <Icon className={`w-4 h-4 lg:w-[18px] lg:h-[18px] xl:w-5 xl:h-5 relative transition-all duration-300 ${
-                    isCurrentPage 
-                      ? 'text-[#7F01D2]' 
-                      : 'text-[#B6B6B6] group-hover:text-[#7F01D2]'
-                  }`} />
-                  {/* Индикатор активной страницы */}
-                  <div className={`absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#7F01D2] rounded-full transition-opacity duration-300 ${
-                    isCurrentPage ? 'opacity-100' : 'opacity-0'
-                  }`} />
-                </div>
-                {/* Текст */}
-                <span className={`ml-[15px] lg:ml-[18px] xl:ml-[20px] font-montserrat text-[14px] lg:text-[16px] xl:text-[20px] leading-[20px] lg:leading-[24px] transition-all duration-300 ${
-                  isCurrentPage 
-                    ? 'text-[#7F01D2] font-semibold' 
-                    : 'text-[#B6B6B6] font-medium group-hover:text-[#7F01D2] group-hover:font-semibold'
-                } whitespace-nowrap`}>
-                  {item.text}
-                </span>
-              </Link>
-            )
-          })}
+        <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 items-center [&>*]:shrink-0">
+          <div 
+            className="flex items-center gap-10 xl:gap-[60px] transition-transform duration-300 ease-in-out"
+            style={{
+              transform: `scale(var(--nav-scale, 1))`,
+              transformOrigin: 'center center'
+            }}
+          >
+            {navItems.map((item) => {
+              const Icon = item.icon
+              const isCurrentPage = isActive(item.href)
+              return (
+                <Link 
+                  key={item.href}
+                  href={item.href} 
+                  onClick={(e) => handleScroll(e, item.href)}
+                  className="flex items-center group relative py-2"
+                >
+                  <div className="relative">
+                    {/* Иконка */}
+                    <Icon className={`
+                      w-4 lg:w-[18px] xl:w-5
+                      h-4 lg:h-[18px] xl:h-5
+                      relative transition-colors duration-300
+                      ${isCurrentPage 
+                        ? 'text-[#7F01D2]' 
+                        : 'text-[#B6B6B6] group-hover:text-[#7F01D2]'
+                      }
+                    `} />
+                    {/* Индикатор активной страницы */}
+                    <div className={`
+                      absolute -bottom-2 left-1/2 -translate-x-1/2 
+                      w-1 h-1 
+                      bg-[#7F01D2] rounded-full transition-opacity duration-300 
+                      ${isCurrentPage ? 'opacity-100' : 'opacity-0'}
+                    `} />
+                  </div>
+                  {/* Текст */}
+                  <span className={`
+                    ml-[15px] lg:ml-[18px] xl:ml-5
+                    font-montserrat
+                    text-sm lg:text-base xl:text-xl
+                    leading-5 lg:leading-6 xl:leading-7
+                    transition-all duration-300
+                    ${isCurrentPage 
+                      ? 'text-[#7F01D2] font-semibold' 
+                      : 'text-[#B6B6B6] font-medium group-hover:text-[#7F01D2] group-hover:font-semibold'
+                    }
+                    whitespace-nowrap
+                  `}>
+                    {item.text}
+                  </span>
+                </Link>
+              )
+            })}
+          </div>
         </nav>
 
         {/* Кнопка входа - Десктоп */}
         <div className="hidden lg:block absolute right-4 lg:right-[50px] xl:right-[178px] top-1/2 -translate-y-1/2">
-          <Button variant="header">
+          <Button variant="header" href="/login">
             Войти
           </Button>
         </div>
@@ -226,7 +259,7 @@ export const Header: FC = () => {
         <div className="lg:hidden">
           {/* Мобильная кнопка входа */}
           <div className="lg:hidden absolute right-16 md:right-20 top-1/2 -translate-y-1/2">
-            <Button variant="header">
+            <Button variant="header" href="/login">
               Войти
             </Button>
           </div>

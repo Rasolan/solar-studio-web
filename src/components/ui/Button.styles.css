@@ -17,20 +17,44 @@
   }
 }
 
+@keyframes mobilePulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.98);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 .button-text {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: center;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.button-text:active {
-  animation: textPulse 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+@media (max-width: 640px) {
+  .button-text:active {
+    animation: mobilePulse 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+}
+
+@media (min-width: 641px) {
+  .button-text:active {
+    animation: textPulse 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
 }
 
 .card-glow::before {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 9px 44px;
+  border-radius: 8px 32px;
   padding: 1px;
   background: linear-gradient(
     to right,
@@ -46,6 +70,13 @@
   mask-composite: exclude;
   -webkit-mask-composite: xor;
   pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 641px) {
+  .card-glow::before {
+    border-radius: 9px 44px;
+  }
 }
 
 .card-glow:hover::before {
@@ -55,4 +86,16 @@
     rgba(215, 182, 255, 0.5)
   );
   filter: blur(2px);
-} 
+}
+
+/* Стили для активного состояния на мобильных */
+@media (max-width: 640px) {
+  .card-glow:active::before {
+    background: linear-gradient(
+      to right,
+      rgba(215, 182, 255, 0.3),
+      rgba(215, 182, 255, 0.4)
+    );
+    filter: blur(1px);
+  }
+}

@@ -129,6 +129,8 @@ export const createReviewsStyles = (
     justify-content: center;
     box-shadow: 0 4px 20px rgba(131, 0, 218, 0.2);
     transform: translateZ(0) scale(0.95);
+    top: 50%;
+    margin-top: -25px;
   }
 
   .slick-prev:hover,
@@ -146,11 +148,11 @@ export const createReviewsStyles = (
   }
 
   .slick-prev {
-    left: -70px;
+    left: 20px;
   }
 
   .slick-next {
-    right: -70px;
+    right: 20px;
   }
 
   /* Показ элементов управления */
@@ -191,5 +193,12 @@ export const createReviewsStyles = (
     transition-property: all;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 0.6s;
+  }
+
+  @media (max-width: 768px) {
+    .slick-prev,
+    .slick-next {
+      display: none !important;
+    }
   }
 `;

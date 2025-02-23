@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${montserrat.variable} ${unbounded.variable}`}>
       <body>
-        <Layout>{children}</Layout>
+        {children}
       </body>
     </html>
   );
