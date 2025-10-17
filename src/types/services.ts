@@ -28,6 +28,7 @@ export interface ServiceCardProps {
   title: string
   description: string
   image: string
+  category: 'builds' | 'plugins' | 'maps'
   price?: number
   downloads?: number
   type: 'paid' | 'free'

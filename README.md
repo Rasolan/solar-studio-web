@@ -1,36 +1,531 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Solar Studio Web
 
-## Getting Started
+## ⚠️ ВАЖНОЕ УВЕДОМЛЕНИЕ
 
-First, run the development server:
+**Данная работа была загружена в сеть из-за неадекватного заказчика и кто угодно может взять эту работу и делать с ней всё что хочет!**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Этот проект является открытым исходным кодом и может быть свободно использован, модифицирован и распространен любым лицом без каких-либо ограничений.
+
+---
+
+Примечание дизайн главной страницы и личного кабинета не были сделаны лично мною я переносил их из Figma заказчика. Мною были сделаны страницы /login - и всё
+
+## 🚀 Технологический стек
+
+- **Framework:** Next.js 15.1.6
+- **Language:** TypeScript 5
+- **Styling:** Tailwind CSS 3.4.17
+- **Animations:** Framer Motion 12.3.1
+- **UI Components:** Radix UI
+- **Icons:** Heroicons
+- **Notifications:** React Hot Toast
+- **Carousel:** React Slick
+- **Linting:** ESLint 9
+
+## 📁 Подробная структура проекта
+
+```
+solar-studio-web/
+├── 📁 src/
+│   ├── 📁 app/                           # Next.js App Router
+│   │   ├── 📁 account/                   # Личный кабинет
+│   │   │   ├── layout.tsx                # Layout для аккаунта
+│   │   │   ├── page.tsx                  # Главная страница аккаунта
+│   │   │   └── 📁 services/
+│   │   │       └── page.tsx              # Страница услуг в аккаунте
+│   │   ├── 📁 agreement/                 # Страница соглашения
+│   │   │   ├── layout.tsx                # Layout для соглашения
+│   │   │   └── page.tsx                  # Страница договора оферты
+│   │   ├── 📁 login/                     # Страница авторизации
+│   │   │   ├── layout.tsx                # Layout для логина
+│   │   │   └── page.tsx                  # Страница входа/регистрации
+│   │   ├── favicon.ico                   # Иконка сайта (удалена из-за ошибок)
+│   │   ├── globals.css                   # Глобальные стили
+│   │   ├── layout.tsx                    # Корневой layout с метаданными
+│   │   └── page.tsx                      # Главная страница
+│   │
+│   ├── 📁 components/                    # React компоненты
+│   │   ├── 📁 account/                   # Компоненты личного кабинета
+│   │   │   ├── 📁 finances/
+│   │   │   │   └── FinancesSection.tsx   # Секция финансов
+│   │   │   ├── 📁 free/
+│   │   │   │   ├── FreeServiceCard.tsx   # Карточка бесплатной услуги
+│   │   │   │   └── FreeServicesList.tsx  # Список бесплатных услуг
+│   │   │   ├── 📁 navigation/
+│   │   │   │   ├── AccountNavigation.tsx # Навигация аккаунта
+│   │   │   │   ├── AccountSection.tsx    # Секция аккаунта
+│   │   │   │   ├── NavLink.tsx           # Компонент ссылки навигации
+│   │   │   │   ├── PurchasesSection.tsx  # Секция покупок
+│   │   │   │   ├── ServicesSection.tsx   # Секция услуг
+│   │   │   │   └── UserProfile.tsx       # Профиль пользователя
+│   │   │   ├── 📁 purchases/
+│   │   │   │   ├── PurchaseCard.tsx      # Карточка покупки
+│   │   │   │   └── PurchasesList.tsx     # Список покупок
+│   │   │   ├── 📁 services/
+│   │   │   │   ├── ServiceCard.tsx       # Карточка услуги
+│   │   │   │   └── ServicesList.tsx      # Список услуг
+│   │   │   └── 📁 settings/
+│   │   │       └── SettingsSection.tsx   # Секция настроек
+│   │   │
+│   │   ├── 📁 forms/                     # Формы (созданы мной)
+│   │   │   ├── LoginForm.tsx             # Форма входа
+│   │   │   └── RegisterForm.tsx          # Форма регистрации
+│   │   │
+│   │   ├── 📁 icons/                     # SVG иконки
+│   │   │   ├── 📁 account/
+│   │   │   │   └── index.tsx             # Иконки для аккаунта
+│   │   │   └── index.tsx                 # Основные иконки
+│   │   │
+│   │   ├── 📁 layout/                    # Layout компоненты
+│   │   │   ├── Footer.tsx                # Подвал сайта
+│   │   │   ├── Header.tsx                # Шапка сайта
+│   │   │   ├── index.ts                  # Экспорты layout
+│   │   │   ├── Layout.tsx                # Основной layout
+│   │   │   └── LayoutWrapper.tsx         # Обертка layout
+│   │   │
+│   │   ├── 📁 providers/                 # Context провайдеры
+│   │   │   └── NotificationsProvider.tsx # Провайдер уведомлений
+│   │   │
+│   │   ├── 📁 sections/                  # Секции главной страницы (из Figma)
+│   │   │   ├── Free.tsx                  # Секция бесплатных материалов
+│   │   │   ├── Hero.tsx                  # Главная секция
+│   │   │   ├── Products.tsx              # Секция продуктов
+│   │   │   ├── Reviews.styles.ts         # Стили отзывов
+│   │   │   ├── Reviews.tsx               # Секция отзывов
+│   │   │   ├── Services.tsx              # Секция услуг
+│   │   │   └── Statistics.tsx            # Секция статистики
+│   │   │
+│   │   └── 📁 ui/                        # UI компоненты
+│   │       ├── Button.styles.css         # Стили кнопки
+│   │       ├── Button.tsx                # Компонент кнопки
+│   │       ├── Checkbox.tsx              # Компонент чекбокса
+│   │       ├── FormInput.tsx             # Компонент поля ввода
+│   │       ├── Notification.tsx          # Компонент уведомления
+│   │       ├── PageTransition.tsx        # Компонент переходов
+│   │       ├── ProductCard.tsx           # Карточка продукта
+│   │       ├── ProductModal.tsx          # Модальное окно продукта
+│   │       ├── ReviewCard.tsx            # Карточка отзыва
+│   │       ├── ServicesCard.tsx          # Карточка услуги
+│   │       ├── ServicesModal.tsx         # Модальное окно услуги
+│   │       └── types.ts                  # Типы UI компонентов
+│   │
+│   ├── 📁 hooks/                         # Пользовательские хуки
+│   │   ├── useNotifications.ts           # Хук для уведомлений
+│   │   ├── usePurchases.ts               # Хук для покупок
+│   │   └── useServices.ts                # Хук для услуг
+│   │
+│   ├── 📁 lib/                           # Утилиты и валидация
+│   │   ├── utils.ts                      # Общие утилиты
+│   │   └── validation.ts                 # Валидация форм (создана мной)
+│   │
+│   └── 📁 types/                         # TypeScript типы
+│       ├── purchases.ts                  # Типы для покупок
+│       ├── services.ts                   # Типы для услуг
+│       └── svg.d.ts                      # Типы для SVG
+│
+├── 📁 public/                            # Статические файлы
+│   ├── avatar.png                        # Аватар пользователя
+│   ├── collaboration.png                 # Изображение сотрудничества
+│   ├── 📁 font/
+│   │   └── ActayWide-Bold.otf            # Кастомный шрифт
+│   ├── 📁 footer/
+│   │   ├── flower.png                    # Декоративный элемент
+│   │   └── SolarStudioDark.png           # Логотип в темной теме
+│   ├── 📁 free/                          # Изображения бесплатных материалов
+│   │   ├── f-1.jpg, f-2.jpg, f-3.jpg, f-4.jpg, f-5.jpg
+│   │   └── f-4.png
+│   ├── hero-bg.png                       # Фон главной секции
+│   ├── hero-image.png                    # Изображение героя
+│   ├── not-sell.png                      # Изображение "не продается"
+│   ├── 📁 partners/                      # Логотипы партнеров
+│   │   ├── p-1.jpg, p-2.png, p-3.jpg
+│   ├── 📁 productmodal/                  # Изображения для модалок продуктов
+│   │   ├── bg-im.png
+│   │   └── pm-1.png - pm-6.png
+│   ├── 📁 products/                      # Изображения продуктов
+│   │   └── p-1.png - p-6.png
+│   ├── prog-b-l.png                      # Прогресс бар (большой)
+│   ├── prog-b-p.png                      # Прогресс бар (маленький)
+│   ├── rr.png                            # Изображение отзывов
+│   ├── 📁 servicemodal/                  # Изображения для модалок услуг
+│   │   └── sm-1.png - sm-6.png
+│   ├── 📁 services/                      # Изображения услуг
+│   │   └── s-1.png - s-6.png
+│   ├── 📁 social/                        # Иконки социальных сетей
+│   │   ├── telegram.svg
+│   │   └── youtube.svg
+│   ├── SolarStudioDark.png               # Логотип (темная тема)
+│   ├── SolarStudioLogobg.png             # Логотип с фоном
+│   ├── SolarStudioLogobgv2.png           # Логотип с фоном v2
+│   ├── unlogin.svg                       # Иконка неавторизованного пользователя
+│   └── User.svg                          # Иконка пользователя
+│
+├── 📄 .gitignore                         # Игнорируемые файлы Git
+├── 📄 eslint.config.mjs                  # Конфигурация ESLint
+├── 📄 next-env.d.ts                      # Типы Next.js
+├── 📄 next.config.ts                     # Конфигурация Next.js
+├── 📄 package.json                       # Зависимости и скрипты
+├── 📄 package-lock.json                  # Заблокированные версии
+├── 📄 postcss.config.js                  # Конфигурация PostCSS
+├── 📄 postcss.config.mjs                 # Конфигурация PostCSS (ES модули)
+├── 📄 README.md                          # Документация проекта
+├── 📄 tailwind.config.js                 # Конфигурация Tailwind
+├── 📄 tailwind.config.ts                 # Конфигурация Tailwind (TypeScript)
+└── 📄 tsconfig.json                      # Конфигурация TypeScript
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🗺️ Навигация по страницам
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🏠 Главная страница (`/`)
+- **Компонент:** `src/app/page.tsx`
+- **Описание:** Главная страница с всеми секциями
+- **Секции:**
+  - `Hero` - Приветственная секция
+  - `Reviews` - Отзывы клиентов
+  - `Products` - Каталог продуктов
+  - `Services` - Услуги студии
+  - `Free` - Бесплатные материалы
+  - `Statistics` - Статистика проекта
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🔐 Страница авторизации (`/login`)
+- **Компонент:** `src/app/login/page.tsx`
+- **Описание:** Страница входа и регистрации
+- **Формы:**
+  - `LoginForm` - Форма входа (создана мной)
+  - `RegisterForm` - Форма регистрации (создана мной)
 
-## Learn More
+### 👤 Личный кабинет (`/account`)
+- **Компонент:** `src/app/account/page.tsx`
+- **Описание:** Главная страница личного кабинета
+- **Секции:**
+  - `UserProfile` - Профиль пользователя
+  - `PurchasesSection` - История покупок
+  - `ServicesSection` - Управление услугами
+  - `FinancesSection` - Финансы
+  - `SettingsSection` - Настройки
 
-To learn more about Next.js, take a look at the following resources:
+### 🛍️ Услуги в аккаунте (`/account/services`)
+- **Компонент:** `src/app/account/services/page.tsx`
+- **Описание:** Детальная страница услуг
+- **Компоненты:**
+  - `ServicesList` - Список услуг
+  - `FreeServicesList` - Бесплатные услуги
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 📄 Соглашение (`/agreement`)
+- **Компонент:** `src/app/agreement/page.tsx`
+- **Описание:** Страница договора оферты
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🧩 Детальная навигация по компонентам
 
-## Deploy on Vercel
+### 📋 Формы (созданы мной)
+```
+📁 forms/
+├── LoginForm.tsx          # Форма авторизации
+│   ├── Валидация полей
+│   ├── Анимации ввода
+│   ├── Обработка ошибок
+│   └── Интеграция с validation.ts
+└── RegisterForm.tsx       # Форма регистрации
+    ├── Валидация пароля
+    ├── Подтверждение пароля
+    ├── Согласие с условиями
+    └── Интеграция с validation.ts
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🎨 UI Компоненты
+```
+📁 ui/
+├── Button.tsx             # Универсальная кнопка
+│   ├── Варианты: header, card, accent, modal
+│   ├── Размеры: sm, md, lg, xl
+│   ├── Поддержка ссылок
+│   └── Анимации hover
+├── FormInput.tsx          # Поле ввода
+│   ├── Валидация в реальном времени
+│   ├── Показ ошибок/успеха
+│   ├── Переключение пароля
+│   └── Анимации фокуса
+├── Checkbox.tsx           # Кастомный чекбокс
+├── ProductCard.tsx        # Карточка продукта
+├── ProductModal.tsx       # Модальное окно продукта
+├── ServicesCard.tsx       # Карточка услуги
+├── ServicesModal.tsx      # Модальное окно услуги
+├── ReviewCard.tsx         # Карточка отзыва
+└── Notification.tsx       # Система уведомлений
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🏗️ Layout Компоненты
+```
+📁 layout/
+├── Layout.tsx             # Основной layout
+├── Header.tsx             # Шапка сайта
+│   ├── Навигация
+│   ├── Кнопка входа
+│   └── Мобильное меню
+├── Footer.tsx             # Подвал сайта
+│   ├── Ссылки
+│   ├── Социальные сети
+│   └── Копирайт
+└── LayoutWrapper.tsx      # Обертка layout
+```
+
+### 📱 Секции главной страницы (из Figma)
+```
+📁 sections/
+├── Hero.tsx               # Главная секция
+│   ├── Анимированный фон
+│   ├── Призыв к действию
+│   └── Основной заголовок
+├── Products.tsx           # Каталог продуктов
+│   ├── Карточки продуктов
+│   ├── Модальные окна
+│   └── Фильтрация
+├── Services.tsx           # Услуги студии
+│   ├── Платные услуги
+│   ├── Бесплатные услуги
+│   └── Детальная информация
+├── Reviews.tsx            # Отзывы клиентов
+│   ├── Карусель отзывов
+│   ├── Звездный рейтинг
+│   └── Анимации
+├── Free.tsx               # Бесплатные материалы
+│   ├── Скачивания
+│   ├── Партнеры
+│   └── Демо версии
+└── Statistics.tsx         # Статистика
+    ├── Цифры достижений
+    ├── Анимированные счетчики
+    └── Визуализация данных
+```
+
+### 👤 Компоненты личного кабинета
+```
+📁 account/
+├── 📁 navigation/
+│   ├── AccountNavigation.tsx  # Боковая навигация
+│   ├── UserProfile.tsx        # Профиль пользователя
+│   ├── NavLink.tsx           # Активные ссылки
+│   ├── AccountSection.tsx    # Основная секция
+│   ├── PurchasesSection.tsx  # Секция покупок
+│   └── ServicesSection.tsx   # Секция услуг
+├── 📁 purchases/
+│   ├── PurchasesList.tsx     # Список покупок
+│   └── PurchaseCard.tsx      # Карточка покупки
+├── 📁 services/
+│   ├── ServicesList.tsx      # Список услуг
+│   └── ServiceCard.tsx       # Карточка услуги
+├── 📁 free/
+│   ├── FreeServicesList.tsx  # Список бесплатных услуг
+│   └── FreeServiceCard.tsx   # Карточка бесплатной услуги
+├── 📁 finances/
+│   └── FinancesSection.tsx   # Управление финансами
+└── 📁 settings/
+    └── SettingsSection.tsx   # Настройки аккаунта
+```
+
+### 🎣 Пользовательские хуки
+```
+📁 hooks/
+├── useServices.ts          # Хук для работы с услугами
+│   ├── Загрузка данных
+│   ├── Фильтрация по категориям
+│   └── Состояние загрузки
+├── usePurchases.ts         # Хук для покупок
+│   ├── История покупок
+│   ├── Моковые данные
+│   └── Управление состоянием
+└── useNotifications.ts     # Хук для уведомлений
+    ├── Показ уведомлений
+    ├── Управление сессией
+    └── Интеграция с провайдером
+```
+
+### 🔧 Утилиты и валидация
+```
+📁 lib/
+├── utils.ts               # Общие утилиты
+│   ├── Функция cn() для классов
+│   ├── Форматирование
+│   └── Хелперы
+└── validation.ts          # Валидация форм (создана мной)
+    ├── Валидация логина
+    ├── Валидация пароля
+    ├── Подтверждение пароля
+    ├── Правила валидации
+    └── Типы ошибок
+```
+
+### 🎨 Иконки
+```
+📁 icons/
+├── index.tsx              # Основные иконки
+│   ├── CartIcon           # Иконка корзины
+│   ├── ServicesIcon       # Иконка услуг
+│   ├── ReviewsIcon        # Иконка отзывов
+│   ├── AgreementIcon      # Иконка соглашения
+│   ├── StarIcon           # Иконка звезды
+│   ├── HeartIcon          # Иконка сердца
+│   ├── TelegramIcon       # Иконка Telegram
+│   ├── DiscordIcon        # Иконка Discord
+│   └── Множество других иконок
+└── 📁 account/
+    └── index.tsx          # Иконки для аккаунта
+```
+
+## 🎯 Пути к ключевым файлам
+
+### 🚀 Точки входа
+- **Главная страница:** `src/app/page.tsx`
+- **Авторизация:** `src/app/login/page.tsx`
+- **Аккаунт:** `src/app/account/page.tsx`
+- **Соглашение:** `src/app/agreement/page.tsx`
+
+### 🎨 Стили и конфигурация
+- **Глобальные стили:** `src/app/globals.css`
+- **Tailwind конфиг:** `tailwind.config.ts`
+- **TypeScript конфиг:** `tsconfig.json`
+- **Next.js конфиг:** `next.config.ts`
+
+### 📦 Зависимости
+- **Package.json:** `package.json`
+- **Заблокированные версии:** `package-lock.json`
+
+### 🖼️ Статические ресурсы
+- **Изображения:** `public/`
+- **Шрифты:** `public/font/`
+- **Иконки:** `public/social/`
+
+## 🎨 Основные функции
+
+### 🏠 Главная страница
+- **Hero секция** с анимированным фоном
+- **Блок отзывов** с каруселью
+- **Каталог продуктов** с модальными окнами
+- **Секция услуг** (платные и бесплатные)
+- **Статистика** проекта
+- **Бесплатные материалы**
+
+### 🔐 Система авторизации
+- Форма входа с валидацией
+- Форма регистрации
+- Валидация полей в реальном времени
+- Анимации и интерактивность
+
+### 👤 Личный кабинет
+- Навигация по разделам
+- Профиль пользователя
+- История покупок
+- Управление услугами
+- Финансы
+- Настройки
+
+### 🛍️ Каталог продуктов
+- Карточки товаров с изображениями
+- Модальные окна с детальной информацией
+- Фильтрация по категориям
+- Система цен
+
+## 🔧 Установка и запуск
+
+### Требования
+- Node.js 18+ 
+- npm или yarn
+
+### Установка зависимостей
+```bash
+npm install
+# или
+yarn install
+```
+
+### Запуск в режиме разработки
+```bash
+npm run dev
+# или
+yarn dev
+```
+
+Приложение будет доступно по адресу: `http://localhost:4400`
+
+### Сборка для продакшена
+```bash
+npm run build
+npm run start
+# или
+yarn build
+yarn start
+```
+
+### Линтинг
+```bash
+npm run lint
+# или
+yarn lint
+```
+
+## 📱 Адаптивность
+
+Проект полностью адаптивен и оптимизирован для:
+- 📱 Мобильные устройства (320px+) - даже не делал ибо на дескотоп было сложно всё это нормально перенсити (с учётом требываний заказчика)
+- 📱 Планшеты (768px+) 50/50$
+- 💻 Десктоп (1024px+)
+- 🖥️ Большие экраны (1440px+) 
+
+## 🎨 Дизайн система
+
+### Цветовая палитра
+- **Основной:** #6E0CA9 (фиолетовый)
+- **Акцентный:** #7F01D2 (яркий фиолетовый)
+- **Фон:** #000000 (черный)
+- **Текст:** #FFFFFF (белый)
+- **Вторичный текст:** #B6B6B6 (серый)
+
+### Типографика
+- **Основной шрифт:** Montserrat
+- **Заголовки:** Unbounded
+- **Акцентный:** Actay Wide
+
+### Анимации
+- Плавные переходы (300ms)
+- Hover эффекты
+- Framer Motion анимации
+- Кастомные CSS анимации
+
+
+
+### Структура компонентов
+Каждый компонент следует принципам:
+- Типизация TypeScript
+- Модульность
+- Переиспользуемость
+- Адаптивность
+
+### Валидация форм
+Используется собственная система валидации:
+- Валидация в реальном времени
+- Показ ошибок
+- Визуальная обратная связь
+
+### Состояние приложения
+- React hooks для локального состояния
+- Context API для глобального состояния
+- Моковые данные для демонстрации
+
+## 📦 Основные зависимости
+
+```json
+{
+  "next": "15.1.6",
+  "react": "19.0.0",
+  "typescript": "5",
+  "tailwindcss": "3.4.17",
+  "framer-motion": "12.3.1",
+  "@radix-ui/react-dialog": "1.1.6",
+  "react-hot-toast": "2.5.1",
+  "react-slick": "0.30.3"
+}
+```
+
+---
+
+**Напоминание:** Данная работа была загружена в сеть из-за неадекватного заказчика и кто угодно может взять эту работу и делать с ней всё что хочет!
