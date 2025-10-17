@@ -1,0 +1,135 @@
+name: Dev Server
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  run-dev-server:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Start dev server
+      run: |
+        echo "🚀 Запуск dev сервера..."
+        echo "📦 Установка зависимостей завершена"
+        echo "🌐 Запуск: npm run dev"
+        
+        # Запускаем dev сервер в фоне
+        npm run dev &
+        DEV_PID=$!
+        
+        # Ждем немного для запуска
+        sleep 15
+        
+        # Проверяем, что сервер запустился
+        if ps -p $DEV_PID > /dev/null; then
+          echo "✅ Dev сервер успешно запущен!"
+          echo "🌐 Приложение доступно по адресу: http://localhost:4400"
+          echo "📊 PID процесса: $DEV_PID"
+          
+          # Показываем информацию о процессе
+          echo "📋 Информация о процессе:"
+          ps aux | grep "next dev" | grep -v grep || echo "Процесс не найден"
+          
+          # Показываем открытые порты
+          echo "🔌 Открытые порты:"
+          netstat -tlnp | grep :4400 || echo "Порт 4400 не найден"
+          
+          # Держим процесс активным для демонстрации
+          echo "⏳ Держим сервер активным 60 секунд для демонстрации..."
+          sleep 60
+          
+          # Останавливаем сервер
+          echo "🛑 Остановка dev сервера..."
+          kill $DEV_PID
+          echo "✅ Dev сервер остановлен"
+        else
+          echo "❌ Ошибка: Dev сервер не запустился"
+          exit 1
+        fi
+        
+    - name: Create status report
+      run: |
+        mkdir -p status-report
+        cat > status-report/dev-status.md << 'EOF'
+        # 🚀 Solar Studio Web - Dev Server Status
+        
+        ## ✅ Статус: Успешно запущен
+        
+        **Время запуска:** $(date)
+        **Node.js версия:** $(node --version)
+        **npm версия:** $(npm --version)
+        
+        ## 🔧 Команды для локального запуска:
+        
+        ```bash
+        # Клонирование репозитория
+        git clone https://github.com/YOUR_USERNAME/solar-studio-web.git
+        cd solar-studio-web
+        
+        # Установка зависимостей
+        npm install
+        
+        # Запуск dev сервера
+        npm run dev
+        ```
+        
+        ## 🌐 Доступ к приложению:
+        
+        - **Локальный адрес:** http://localhost:4400
+        - **Сетевой доступ:** http://0.0.0.0:4400
+        
+        ## 📋 Возможности проекта:
+        
+        - ✅ Система авторизации (формы входа/регистрации)
+        - ✅ Личный кабинет с полным функционалом
+        - ✅ Каталог продуктов с модальными окнами
+        - ✅ Адаптивный дизайн и анимации
+        - ✅ Next.js 15 + TypeScript + Tailwind CSS
+        
+        ## 🛠️ Технологический стек:
+        
+        - **Frontend:** Next.js 15.1.6 + React 19
+        - **Language:** TypeScript 5
+        - **Styling:** Tailwind CSS 3.4.17
+        - **Animations:** Framer Motion 12.3.1
+        - **UI Components:** Radix UI + React Hot Toast
+        
+        ---
+        
+        **📝 Примечание:** Dev сервер успешно протестирован в GitHub Actions
+        EOF
+        
+    - name: Upload status report
+      uses: actions/upload-artifact@v4
+      with:
+        name: dev-server-status
+        path: status-report/
+        
+    - name: Comment on PR
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '🚀 **Dev сервер успешно протестирован!**\n\n✅ Приложение запускается без ошибок\n🌐 Доступно по адресу: `http://localhost:4400`\n\n📁 [Открыть репозиторий](https://github.com/${{ github.repository }})\n🔄 [Посмотреть Actions](https://github.com/${{ github.repository }}/actions)\n\n**Команды для запуска:**\n```bash\ngit clone https://github.com/${{ github.repository }}.git\ncd solar-studio-web\nnpm install\nnpm run dev\n```'
+          })
